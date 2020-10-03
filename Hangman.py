@@ -1,6 +1,6 @@
 from __future__ import print_function
 
-HANGMANSTAGES = ["""
+HANGMAN_STAGES = ["""
   *------*
   |      |
          |
@@ -51,104 +51,104 @@ HANGMANSTAGES = ["""
          |
 ++++++++++"""]
 
-WrongGuess = 1
-UserInput = []
-CorrectAnswer = []
-alphaS = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U",
+wrong_guess = 1
+user_input = []
+correct_answer = []
+alpha_s = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U",
           "V", "W", "X", "Y", "Z"]
-alphaC = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u",
+alpha_c = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u",
           "v", "w", "x", "y", "z"]
-GuessedLetter = []
-WrongLetter = []
+guessed_letter = []
+wrong_letter = []
 
 print("Let's play Hangman!")
 word = str(input("Enter a word to get started: ")).upper()
 
-print(HANGMANSTAGES[0])
+print(HANGMAN_STAGES[0])
 print()
 
 for i in range(len(word)):
     if word[i] == " ":
-        CorrectAnswer.append("  ")
+        correct_answer.append("  ")
     else:
-        CorrectAnswer.append("_ ")
-        UserInput.append(word[i])
+        correct_answer.append("_ ")
+        user_input.append(word[i])
 
-for answer in CorrectAnswer:
+for answer in correct_answer:
     print(" ".join(answer), end="")
 
 print()
 print()
 print("Don't hang him! Good luck!")
-while WrongGuess < 7:
+while wrong_guess < 7:
     guess = str(input("Guess a Letter: ")).upper()
     alphaTest = False
-    guessedL = False
-    guessedRight = False
+    guessed_l = False
+    guessed_right = False
 
-    for S in alphaS:
-        if guess == S:
+    for s in alpha_s:
+        if guess == s:
             alphaTest = True
             break
-    for C in alphaC:
-        if guess == C:
+    for c in alpha_c:
+        if guess == c:
             alphaTest = True
             break
 
-    for G in GuessedLetter:
+    for g in guessed_letter:
         if guess == G:
-            guessedL = True
+            guessed_l = True
             break
 
-    for letter in UserInput:
+    for letter in user_input:
         if guess == letter:
-            guessedRight = True
+            guessed_right = True
             break
 
     if len(guess) > 1:
         print("That's more than ONE character!!!")
-        WrongGuess += 1
+        wrong_guess += 1
     elif alphaTest == False:
         print("That's not a LETTER!!!")
-        WrongGuess += 1
-    elif guessedL == True:
+        wrong_guess += 1
+    elif guessed_l == True:
         print("You guessed that one already!!!")
-    elif guessedRight == True:
+    elif guessed_right == True:
         print("You got that letter right!")
-        GuessedLetter.append(guess)
-        print(HANGMANSTAGES[WrongGuess - 1])
+        guessed_letter.append(guess)
+        print(HANGMAN_STAGES[wrong_guess - 1])
 
         for i in range(len(word)):
 
             if word[i] == guess:
-                CorrectAnswer[i] = guess + " "
+                correct_answer[i] = guess + " "
 
-        for answer in CorrectAnswer:
+        for answer in correct_answer:
             print(" ".join(answer), end="")
 
         print()
-        print(WrongLetter)
+        print(wrong_letter)
         print()
     else:
         print("Oops, looks like that's not one of the letters!")
-        WrongLetter.append(guess)
-        GuessedLetter.append(guess)
-        print(HANGMANSTAGES[WrongGuess])
+        wrong_letter.append(guess)
+        guessed_letter.append(guess)
+        print(HANGMAN_STAGES[wrong_guess])
 
-        for answer in CorrectAnswer:
+        for answer in correct_answer:
             print(" ".join(answer), end="")
 
         print()
-        print(WrongLetter)
+        print(wrong_letter)
         print()
-        WrongGuess += 1
+        wrong_guess += 1
 
-    WinCount = 0
-    for items in CorrectAnswer:
+    win_count = 0
+    for items in correct_answer:
         if items == "_ ":
-            WinCount += 1
+            win_count += 1
 
-    if WinCount == 0:
+    if win_count == 0:
         print("Congratulations! You have won the game!")
         input("Press 'Enter' to Exit")
         break
